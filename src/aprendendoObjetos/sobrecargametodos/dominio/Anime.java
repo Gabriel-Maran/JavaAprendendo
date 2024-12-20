@@ -23,30 +23,31 @@ public class Anime {
         this.genero = genero;
     }
 
-    public void setTipo(String tipo){
-        this.tipo = tipo;
-    }
-    public void setEposodios(int espisodios){
-        this.episodios = espisodios;
-    }
-    public String getTipo(){
-        return this.tipo;
-    }
-    public int getEpisodios(){
-        return this.episodios;
-    }
-    public void setNome(String nome){
-        this.nome = nome;
-    }
-    public String getNome(){
-        return this.nome;
-    }
-
-    public String getGenero() {
-        return genero;
-    }
-
-    public void setGenero(String genero) {
-        this.genero = genero;
-    }
+    // Outro metodo, ao inves de usar o init, podemos fazer cada get e set separado
+    //    public void setTipo(String tipo){
+    //        this.tipo = tipo;
+    //    }
+    //    public void setEposodios(int espisodios){
+    //        this.episodios = espisodios;
+    //    }
+    //    public String getTipo(){
+    //        return this.tipo;
+    //    }
+    //    public int getEpisodios(){
+    //        return this.episodios;
+    //    }
+    //    public void setNome(String nome){
+    //        this.nome = nome;
+    //    }
+    //    public String getNome(){
+    //        return this.nome;
+    //    }
+    //
+    //    public String getGenero() {
+    //        return genero;
+    //    }
+    //
+    //    public void setGenero(String genero) {
+    //        this.genero = genero;
+    //    }
 }
