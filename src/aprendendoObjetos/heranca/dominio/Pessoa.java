@@ -4,9 +4,20 @@ public class Pessoa {
     protected String nome;
     protected String cpf;
     protected Endereco endereco;
+
     //protected da o acesso da variavel para filhos desta mesma, assim, permitindo que eles acessem diretamente a variavel, da propria classe
+    static {
+        System.out.println("Dentro do bloco estático de Pessoa");
+    }
+    {
+        System.out.println("Dentro do bloco de inicialização não estatico de Pessoa 1");
+    }
+    {
+        System.out.println("Dentro do bloco de inicialização não estatico de Pessoa 2");
+    }
 
     public Pessoa(String nome) {
+        System.out.println("Dentro do contrtutor de Pessoa");
         this.nome = nome;
     }
 
