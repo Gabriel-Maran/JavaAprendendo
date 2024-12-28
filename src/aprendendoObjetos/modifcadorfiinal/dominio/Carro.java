@@ -7,11 +7,11 @@ public class Carro { //Classe final, ninguém pode herdar
     //o 'final' deve ter um valor, deve ser informado
     public final Comprador COMPRADOR = new Comprador(); //Não pode alterar a referencia para o objeto
 
-    static{
+    static {
         VELOCIDADE_LIMITE = 250;
     }
 
-    public final void imprime(){ //metodo final = não pode ser sobrescrito. "Esse comportamento tem que ter para todos"
+    public final void imprime() { //metodo final = não pode ser sobrescrito. "Esse comportamento tem que ter para todos"
         System.out.println("Nome: " + this.nome);
     }
 

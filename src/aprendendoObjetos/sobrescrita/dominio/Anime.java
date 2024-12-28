@@ -13,7 +13,6 @@ public class Anime {
         return "Anime: "+this.nome;
     }
 
-
     public String getNome() {
         return nome;
     }
