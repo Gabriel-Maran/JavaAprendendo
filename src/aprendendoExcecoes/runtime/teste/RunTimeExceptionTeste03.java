@@ -14,6 +14,7 @@ public class RunTimeExceptionTeste03 {
         } catch (Exception e) {
             e.printStackTrace();
         } finally {
+            //Sempre roda, mesmo se o try não for executado
             System.out.println("Fechando recurso liberado pelo SO");
         }
     }
