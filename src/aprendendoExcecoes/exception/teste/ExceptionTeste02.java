@@ -12,6 +12,8 @@ public class ExceptionTeste02 {
         }
     }
 
+
+
     public static void criarNovoArquivo() throws IOException {
         File file = new File("src/aprendendoExcecoes/exception/arquivo\\teste.txt");
         //Se for proibido a criação de arquivos dentro daquela pasta ou local, não será possivel criar e vai dar o IOException de acesso negado
