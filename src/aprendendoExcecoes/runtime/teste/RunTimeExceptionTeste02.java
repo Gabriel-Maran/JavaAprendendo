@@ -12,6 +12,8 @@ public class RunTimeExceptionTeste02 {
         System.out.println("O resultado da divisão é: "+divisao(num1,num2));
     }
 
+
+
     /**
      *
      * @param a
