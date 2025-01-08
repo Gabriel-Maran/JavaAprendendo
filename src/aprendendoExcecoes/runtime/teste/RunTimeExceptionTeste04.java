@@ -7,14 +7,8 @@ public class RunTimeExceptionTeste04 {
     public static void main(String[] args) {
         try {
             throw new RuntimeException();
-        }catch (ArrayIndexOutOfBoundsException e) {//mais objetivo no começo
+        }catch (ArrayIndexOutOfBoundsException | IllegalArgumentException | ArithmeticException e) {//mais objetivo no começo
             System.out.println("Dentro do ArrayIndexOutOfBoundsException");
-        }catch(IndexOutOfBoundsException e) {
-            System.out.println("Dentro do IndexOutOfBoundsException");
-        }catch(IllegalArgumentException e) {
-            System.out.println("Dentro do IllegalArgumentException");
-        }catch(ArithmeticException e) {
-            System.out.println("Dentro do ArithmeticException");
         }catch(RuntimeException e){
             System.out.println("Dentro do RuntimeException");
         }//mais generico no final
@@ -22,9 +16,7 @@ public class RunTimeExceptionTeste04 {
 
         try {
             talvezLanceException();
-        } catch (SQLException throwables) {
-            throwables.printStackTrace();
-        } catch (FileNotFoundException e) {
+        } catch (SQLException | FileNotFoundException e) { // "|" representa o "ou", não se pode usar se estão na mesma linha de herança
             e.printStackTrace();
         }
     }
