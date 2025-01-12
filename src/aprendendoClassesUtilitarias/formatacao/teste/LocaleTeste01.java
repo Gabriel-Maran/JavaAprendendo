@@ -1,4 +1,4 @@
-package aprendendoClassesUtilitaria.datas.teste;
+package aprendendoClassesUtilitarias.formatacao.teste;
 
 import java.text.DateFormat;
 import java.util.Calendar;

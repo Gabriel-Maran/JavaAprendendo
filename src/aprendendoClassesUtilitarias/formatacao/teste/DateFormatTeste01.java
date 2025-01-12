@@ -1,7 +1,6 @@
-package aprendendoClassesUtilitaria.datas.teste;
+package aprendendoClassesUtilitarias.formatacao.teste;
 
 import java.text.DateFormat;
-import java.text.SimpleDateFormat;
 import java.util.Calendar;
 
 public class DateFormatTeste01 {

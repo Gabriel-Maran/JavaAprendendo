@@ -1,8 +1,7 @@
-package aprendendoClassesUtilitaria.datas.teste;
+package aprendendoClassesUtilitarias.datas.teste;
 
 import java.util.Calendar;
 import java.util.Date;
-import java.util.GregorianCalendar;
 
 public class CalendarTeste01 {
     public static void main(String[] args) {

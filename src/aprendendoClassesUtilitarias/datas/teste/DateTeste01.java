@@ -1,4 +1,4 @@
-package aprendendoClassesUtilitaria.datas.teste;
+package aprendendoClassesUtilitarias.datas.teste;
 
 import java.util.Date;
 
