@@ -7,7 +7,6 @@ public class PatternMatcherTeste01 {
     public static void main(String[] args) {
         String regex = "aba";
         String texto = "abababa";
-        boolean encontrou = false;
         Pattern pattern = Pattern.compile(regex);
         Matcher matcher = pattern.matcher(texto);
         System.out.println("texto: " + texto);
