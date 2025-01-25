@@ -17,8 +17,5 @@ public class PatternMatcherTeste01 {
         while(matcher.find()) {
             System.out.print(matcher.start()+" ");
         }
-        if(!encontrou) {
-            System.out.println("Nenhuma posição encontrada");
-        }
     }
 }
