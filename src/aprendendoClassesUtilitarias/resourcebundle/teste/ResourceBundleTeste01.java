@@ -1,4 +1,4 @@
-package aprendendoClassesUtilitarias.resourcebundle;
+package aprendendoClassesUtilitarias.resourcebundle.teste;
 
 import java.util.Locale;
 import java.util.ResourceBundle;
