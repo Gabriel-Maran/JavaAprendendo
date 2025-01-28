@@ -9,7 +9,7 @@ public class FileWriterTeste01 {
         File file = new File("C:\\Users\\Gabriel\\Desktop\\JavaAprendendo\\src\\aprendendoClassesUtilitarias\\io\\arquivo\\file.txt");
         try (FileWriter fw = new FileWriter(file, true)){//a segunda opção(append) vai adicionar o que está no write e não deleta o que está dentro do arquivo
             fw.write("O Gabriel sabe muito, slk\nNão tem jeito\n");
-            fw.flush(); //Coloca tudo no buffer, bascimente
+            fw.flush(); //Coloca tudo no buffer, bascimente. Deve ser feito sempre
         } catch (IOException e) {
             e.printStackTrace();
         }

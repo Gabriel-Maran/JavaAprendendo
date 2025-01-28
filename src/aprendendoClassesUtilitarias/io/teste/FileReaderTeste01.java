@@ -10,7 +10,7 @@ public class FileReaderTeste01 {
         try(FileReader fr = new FileReader(file)){
 //            System.out.println(fr.read());//Representa o valor o primeiro caracter segundo a tabela ASCII
 //            char[] in = new char[100];
-//            fr.read(in);
+//            fr.read(in);//read retorna a quantidade de caracteres lidos para dentro do array
 //            for(char c : in){
 //                System.out.print(c);
 //            }
