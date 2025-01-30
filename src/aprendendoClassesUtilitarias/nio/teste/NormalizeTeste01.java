@@ -5,7 +5,7 @@ import java.nio.file.Paths;
 
 public class NormalizeTeste01 {
     public static void main(String[] args) {
-        String direotorioProjeto  = "home/gabriel/arquivo.txt";
+        String direotorioProjeto  = "home/gabriel/dev/arquivo.txt";
         String arquivoTxt ="../arquivo.txt0";
         String arquivoTxt2 ="../../arquivo.txt0";
         String arquivoTxt3 ="../../../arquivo.txt0";
@@ -17,7 +17,7 @@ public class NormalizeTeste01 {
         System.out.println(path2.normalize());
         System.out.println(path3.normalize());
 
-        Path path4 = Paths.get("/home/./gabriel/./arquivo.txt");
+        Path path4 = Paths.get("/home/./gabriel/./dev/./arquivo.txt");
         System.out.println(path4.normalize());
 
     }

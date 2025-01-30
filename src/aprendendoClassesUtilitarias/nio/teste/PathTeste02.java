@@ -6,7 +6,7 @@ import java.nio.file.Path;
 import java.nio.file.Paths;
 import java.nio.file.StandardCopyOption;
 
-public class PatheTeste02 {
+public class PathTeste02 {
     public static void main(String[] args) {
         Path arquivoPath = Paths.get("C:\\Users\\Gabriel\\Desktop\\JavaAprendendo\\src\\aprendendoClassesUtilitarias\\nio\\teste\\arquivo");
         if(Files.notExists(arquivoPath)) {
