@@ -1,6 +1,6 @@
-package aprendendoColecoes.equals.teste;
+package aprendendoColecoes.teste;
 
-import aprendendoColecoes.equals.dominio.Smartphone;
+import aprendendoColecoes.dominio.Smartphone;
 
 public class EqualsTeste01 {
     public static void main(String[] args) {

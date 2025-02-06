@@ -1,8 +1,17 @@
-package aprendendoColecoes.hashcode.dominio;
+package aprendendoColecoes.dominio;
 
 public class Smartphone {
     private String serialNumber;
     private String marca;
+
+    @Override
+    public String toString() {
+        return "Smartphone{" +
+                "serialNumber='" + serialNumber + '\'' +
+                ", marca='" + marca + '\'' +
+                '}';
+    }
+
     //BigO Colection Java, para ver as coleções em java
     //Sortidas ou Ordenadas
     //Regras do equal:
