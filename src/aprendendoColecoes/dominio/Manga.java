@@ -21,6 +21,7 @@ public class Manga implements Comparable<Manga> {
         this.quantidade = quantidade;
     }
 
+
     @Override
     public String toString() {
         return "Manga{" +
