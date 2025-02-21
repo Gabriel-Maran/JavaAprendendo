@@ -1,4 +1,4 @@
-package aprendendoLambdas;
+package aprendendoLambdas.teste;
 
 import java.util.List;
 import java.util.function.Consumer;
