@@ -1,9 +1,10 @@
-package aprendendoOptional;
+package aprendendoOptional.teste;
 
 import java.util.List;
 import java.util.Optional;
 
 public class OptionalTeste01 {
+    //Nao criar parametros ou atributos com Optional, indicado para retornos
     public static void main(String[] args) {
         Optional<String> o1 = Optional.of("Frase foda");
         Optional<String> o2 = Optional.ofNullable(null);
