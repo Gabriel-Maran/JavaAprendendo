@@ -5,10 +5,16 @@ import java.util.Objects;
 public class LightNovel {
     private String nome;
     private double preco;
+    private Categoria categoria;
 
     public LightNovel(String nome, double preco) {
         this.nome = nome;
         this.preco = preco;
+    }
+
+    public LightNovel(String nome, double preco, Categoria categoria) {
+        this(nome, preco);
+        this.categoria = categoria;
     }
 
     @Override
@@ -16,6 +22,7 @@ public class LightNovel {
         return "LightNovel{" +
                 "nome='" + nome + '\'' +
                 ", preco=" + preco +
+                ", categoria=" + categoria +
                 '}';
     }
 
@@ -38,5 +45,9 @@ public class LightNovel {
 
     public double getPreco() {
         return preco;
+    }
+
+    public Categoria getCategoria() {
+        return categoria;
     }
 }
