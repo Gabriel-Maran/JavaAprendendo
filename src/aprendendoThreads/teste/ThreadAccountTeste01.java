@@ -13,7 +13,7 @@ public class ThreadAccountTeste01 implements Runnable {
         }
     }
 
-    private Account account = new Account();
+    private final Account account = new Account();
 
     public static void main(String[] args) {
         ThreadAccountTeste01 threadAccountTeste01 = new ThreadAccountTeste01();
@@ -22,14 +22,19 @@ public class ThreadAccountTeste01 implements Runnable {
         t1.start();
         t2.start();
     }
-
+//    private static synchronized void print(){}
+//    private synchronized void withDrawal(int amount) {}
     private void withDrawal(int amount) {
-        if (account.getBalance() >= amount) {
-            System.out.println(Thread.currentThread().getName() + " está indo sacar dinheiro");
-            account.withDrawal(amount);
-            System.out.println(Thread.currentThread().getName() + " completou o saque, o valor atual da conta " + account.getBalance());
-        } else {
-            System.out.println("Sem dinheiro para " + Thread.currentThread().getName() + " efetuar o saque " + account.getBalance());
+        synchronized (account) {
+            System.out.println(Thread.currentThread().getName()+" *** dentro do synchronized");
+            if (account.getBalance() >= amount) {
+                System.out.println(Thread.currentThread().getName() + " está indo sacar dinheiro");
+                account.withDrawal(amount);
+                System.out.println(Thread.currentThread().getName() + " completou o saque, o valor atual da conta " + account.getBalance());
+            } else {
+                System.out.println("Sem dinheiro para " + Thread.currentThread().getName() + " efetuar o saque " + account.getBalance());
+            }
         }
+        System.out.println(Thread.currentThread().getName()+" !!! fora do synchronized");
     }
 }
