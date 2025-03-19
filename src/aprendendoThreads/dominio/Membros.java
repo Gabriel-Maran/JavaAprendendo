@@ -38,7 +38,9 @@ public class Membros {
     }
     public void close(){
         synchronized (this.emails) {
+            open = false;
             System.out.println(Thread.currentThread().getName()+ " notificando todo mundo que não estamos pegando emails");
+            this.emails.notifyAll();
         }
     }
 }
