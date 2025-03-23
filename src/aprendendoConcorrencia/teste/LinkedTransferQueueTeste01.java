@@ -19,7 +19,7 @@ public class LinkedTransferQueueTeste01 {
         if(!tq.isEmpty()){
             System.out.println(tq.element()); //epga o primeiro elemento e o retorna, se estiver vazio, retonra uma exceção
         }
-        System.out.println(tq2.peek()); //epga o primeiro elemento e o retorna, se estiver vazio, retonra null
+        System.out.println(tq2.peek()); //pega o primeiro elemento e o retorna, se estiver vazio, retonra null
         System.out.println(tq.peek());//Mostra qual é o primeiro elemento da fila, se vazio, exceção
         System.out.println(tq.poll());//Pega o primeiro elemento da fila e o remove, se vazio, null
         System.out.println(tq.take());//Pega o primeiro elemento da fila e espera alguem colocar um valor no lugar do que foi retirado

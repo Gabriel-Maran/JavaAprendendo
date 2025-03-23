@@ -1,6 +1,7 @@
 package exercicios.exs02.teste;
 
 import exercicios.exs02.dominio.*;
+import exercicios.exs02.servico.Locadora;
 
 public class AluguelVeiculoTeste01 {
     public static void main(String[] args) {

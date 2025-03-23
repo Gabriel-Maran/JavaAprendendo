@@ -1,4 +1,7 @@
-package exercicios.exs02.dominio;
+package exercicios.exs02.servico;
+
+import exercicios.exs02.dominio.Cliente;
+import exercicios.exs02.dominio.Veiculo;
 
 import java.util.ArrayList;
 import java.util.List;
