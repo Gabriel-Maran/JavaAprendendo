@@ -17,8 +17,9 @@ public class FutureTeste01 {
             System.out.println("Dollar: "+dollar.get(3, TimeUnit.SECONDS));
         } catch (InterruptedException | ExecutionException | TimeoutException e) {
             throw new RuntimeException("Erro ao pegar o valor ");
+        }finally {
+            executorService.shutdown();
         }
-        executorService.shutdown();
     }
 
     private static long doSomething() {
