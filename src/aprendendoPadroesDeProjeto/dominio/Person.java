@@ -1,10 +1,10 @@
 package aprendendoPadroesDeProjeto.dominio;
 
 public class Person {
-    private String firstMame;
-    private String lastMame;
-    private String username;
-    private String email;
+    private final String firstMame;
+    private final String lastMame;
+    private final String username;
+    private final String email;
 
     private Person(String firstMame, String lastMame, String username, String email) {
         this.firstMame = firstMame;
