@@ -1,6 +1,7 @@
 package aprendendoPadroesDeProjeto.dominio;
 
 public interface Currency {
+
     String getSymbol();
 }
 

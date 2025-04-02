@@ -15,10 +15,22 @@ public class Aircraft {
         this.name = name;
     }
 
+    public String getName() {
+        return name;
+    }
+
     public boolean bookSeat(String seat) {
         if(availabreSeats.contains(seat)) {
             return availabreSeats.remove(seat);
         }
         return false;
+    }
+
+    @Override
+    public String toString() {
+        return "Aircraft{" +
+                "availabreSeats=" + availabreSeats +
+                ", name='" + name + '\'' +
+                '}';
     }
 }
