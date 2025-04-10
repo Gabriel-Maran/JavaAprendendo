@@ -18,13 +18,13 @@ public class ConnectionFactoryTeste01 {
                 .id(3)
                 .nome("JJJJJJJJJJ")
                 .build();
-        ProducerService.save(producer);
-        try {
-            Thread.sleep(8000);
-        } catch (InterruptedException e) {
-            throw new RuntimeException(e);
-        }
-        ProducerService.delete(producer.getId());
+        Producer producerUpdate = Producer.ProducerBuilder.builder()
+                .id(1)
+                .nome("SeiLa")
+                .build();
+        ProducerService.update(producerUpdate);
+//        ProducerService.save(producer);
+//        ProducerService.delete(producer.getId());
 
 // Níveis de log (em ordem crescente de severidade):
 
