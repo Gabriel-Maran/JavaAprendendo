@@ -56,4 +56,12 @@ public class Producer {
     public String getNome() {
         return nome;
     }
+
+    @Override
+    public String toString() {
+        return "Producer{" +
+                "id=" + id +
+                ", nome='" + nome + '\'' +
+                '}';
+    }
 }

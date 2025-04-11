@@ -6,8 +6,12 @@ import org.apache.logging.log4j.LogManager;
 import org.apache.logging.log4j.Logger;
 
 import java.sql.Connection;
+import java.sql.ResultSet;
 import java.sql.SQLException;
 import java.sql.Statement;
+import java.util.ArrayList;
+import java.util.List;
+import java.util.Optional;
 
 public class ProducerRepository {
     private static final Logger log = LogManager.getLogger(ProducerRepository.class);
@@ -44,5 +48,36 @@ public class ProducerRepository {
         } catch (SQLException e) {
             log.error("Error while trying to update producer '{}'", producer.getNome(), e);
         }
+    }
+
+    public static List<Producer> findALl() {
+        log.info("Finding all producer in the DB");
+        String sql = "SELECT idproducer, name FROM `anime_store`.`producer`;";
+        return find(sql);
+    }
+
+    public static List<Producer> findByName(String name) {
+        log.info("Finding by name");
+        String sql = "SELECT * FROM anime_store.producer WHERE name like '%%%s%%';".formatted(name);
+        return find(sql);
+    }
+
+    private static List<Producer> find(String sql){
+        List<Producer> producers = new ArrayList<>();
+        try (Connection conn = ConnectionFactory.getConnection();
+             Statement stmt = conn.createStatement();
+             ResultSet rs = stmt.executeQuery(sql)) {
+            while (rs.next()) {
+                Producer producer = Producer.ProducerBuilder.builder()
+                        .id(rs.getInt("idproducer"))
+                        .nome(rs.getString("name"))
+                        .build();
+                producers.add(producer);
+            }
+            return producers;
+        } catch (SQLException e) {
+            log.error("Error while trying to find all producer", e);
+        }
+        return producers;
     }
 }

@@ -9,22 +9,30 @@ import org.apache.logging.log4j.Logger;
 
 import java.sql.Connection;
 import java.sql.Statement;
+import java.util.ArrayList;
+import java.util.List;
 
 public class ConnectionFactoryTeste01 {
     private static final Logger log = LogManager.getLogger(ConnectionFactoryTeste01.class);
 
     public static void main(String[] args) {
-        Producer producer = Producer.ProducerBuilder.builder()
-                .id(3)
-                .nome("JJJJJJJJJJ")
-                .build();
-        Producer producerUpdate = Producer.ProducerBuilder.builder()
-                .id(1)
-                .nome("SeiLa")
-                .build();
-        ProducerService.update(producerUpdate);
+        List<Producer> producer = ProducerService.findByName("SeiL");
+        List<Producer> producer2 = ProducerService.findAll();
+        System.out.println(producer);
+        System.out.println(producer2);
+
+//        Producer producer = Producer.ProducerBuilder.builder()
+//                .id(3)
+//                .nome("JJJJJJJJJJ")
+//                .build();
+//        Producer producerUpdate = Producer.ProducerBuilder.builder()
+//                .id(1)
+//                .nome("SeiLa")
+//                .build();
+//        ProducerService.update(producerUpdate);
 //        ProducerService.save(producer);
 //        ProducerService.delete(producer.getId());
+//
 
 // Níveis de log (em ordem crescente de severidade):
 
