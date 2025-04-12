@@ -21,11 +21,11 @@ public class ProducerService {
         ProducerRepository.update(producer);
     }
 
-    public static List<Producer> findAll(){
+    public static List<Producer> findAll() {
         return ProducerRepository.findALl();
     }
 
-    public static List<Producer> findByName(String name){
+    public static List<Producer> findByName(String name) {
         return ProducerRepository.findByName(name);
     }
 
@@ -33,5 +33,13 @@ public class ProducerService {
         if (id == null || id <= 0) {
             throw new IllegalArgumentException("Id must be a positive integer");
         }
+    }
+
+    public static void showProducerMetaData() {
+        ProducerRepository.showProducerMetaData();
+    }
+
+    public static void showDriverMetaData() {
+        ProducerRepository.showDriverMetaData();
     }
 }

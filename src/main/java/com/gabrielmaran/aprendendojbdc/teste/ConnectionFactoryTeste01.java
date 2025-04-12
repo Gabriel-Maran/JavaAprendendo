@@ -16,10 +16,13 @@ public class ConnectionFactoryTeste01 {
     private static final Logger log = LogManager.getLogger(ConnectionFactoryTeste01.class);
 
     public static void main(String[] args) {
-        List<Producer> producer = ProducerService.findByName("SeiL");
-        List<Producer> producer2 = ProducerService.findAll();
-        System.out.println(producer);
-        System.out.println(producer2);
+//        List<Producer> producer = ProducerService.findByName("SeiL");
+//        List<Producer> producer2 = ProducerService.findAll();
+//        log.info(producer.toString());
+//        log.info(producer2.toString());
+//        ProducerService.showProducerMetaData();
+        ProducerService.showDriverMetaData();
+
 
 //        Producer producer = Producer.ProducerBuilder.builder()
 //                .id(3)
