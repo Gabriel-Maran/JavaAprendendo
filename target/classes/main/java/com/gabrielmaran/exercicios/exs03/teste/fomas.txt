@@ -1,4 +1,0 @@
-circulo,5
-retangulo,10,20
-circulo,3
-retangulo,4,5

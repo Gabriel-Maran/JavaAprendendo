@@ -126,5 +126,44 @@ public class ProducerRepository {
             log.error("Error while trying to show driver meta data", e);
         }
     }
+
+    public static void showTypeScrollWorking() {
+        String sql = "SELECT * FROM anime_store.producer;";
+        try (Connection conn = ConnectionFactory.getConnection();
+             Statement stmt = conn.createStatement(ResultSet.TYPE_SCROLL_INSENSITIVE, ResultSet.CONCUR_UPDATABLE);
+             ResultSet rs = stmt.executeQuery(sql)) {
+            log.info("Is on last row? '{}'", rs.last());//Volta o ultimo
+            log.info("Roll number '{}'", rs.getRow());
+            log.info(Producer.ProducerBuilder.builder().id(rs.getInt("idproducer")).nome(rs.getString("name")).build());
+
+            log.info("Is on First row? '{}'", rs.first());//Volta o primeiro
+            log.info("Roll number '{}'", rs.getRow());
+            log.info(Producer.ProducerBuilder.builder().id(rs.getInt("idproducer")).nome(rs.getString("name")).build());
+
+            log.info("Row Absolute '{}'", rs.absolute(3));//Volta essa exata linha
+            log.info("Roll number '{}'", rs.getRow());
+            log.info(Producer.ProducerBuilder.builder().id(rs.getInt("idproducer")).nome(rs.getString("name")).build());
+
+            log.info("Row Relative '{}'", rs.relative(-2));//Volta uma linha, ou avança, depende do num passado
+            log.info("Roll number '{}'", rs.getRow());
+            log.info(Producer.ProducerBuilder.builder().id(rs.getInt("idproducer")).nome(rs.getString("name")).build());
+
+            log.info("is Last? '{}'", rs.isLast());//Verifica se é a ultima
+            log.info("Roll number '{}'", rs.getRow());
+
+            log.info("is First? '{}'", rs.isFirst());//Verifica se é a primeira
+            log.info("Roll number '{}'", rs.getRow());
+
+            rs.afterLast();
+            log.info("After last row? '{}'", rs.isAfterLast());
+            log.info("--------------------------------");
+            while (rs.previous()) {
+                log.info(Producer.ProducerBuilder.builder().id(rs.getInt("idproducer")).nome(rs.getString("name")).build());
+            }
+
+        } catch (SQLException e) {
+            log.error("Error while trying to show type scroll working", e);
+        }
+    }
 }
 
