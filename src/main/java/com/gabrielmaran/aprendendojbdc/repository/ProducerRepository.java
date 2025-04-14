@@ -8,6 +8,7 @@ import org.apache.logging.log4j.Logger;
 import java.sql.*;
 import java.util.ArrayList;
 import java.util.List;
+import java.util.stream.Collectors;
 
 public class ProducerRepository {
     private static final Logger log = LogManager.getLogger(ProducerRepository.class);
@@ -164,6 +165,30 @@ public class ProducerRepository {
         } catch (SQLException e) {
             log.error("Error while trying to show type scroll working", e);
         }
+    }
+
+    public static List<Producer> findByNameAndUpdateToUppperCase(String name) {
+        String sql = "SELECT * FROM anime_store.producer WHERE name like '%%%s%%';".formatted(name);
+        List<Producer> produtores = new ArrayList<>();
+        try (Connection conn = ConnectionFactory.getConnection();
+             Statement stmt = conn.createStatement(ResultSet.TYPE_SCROLL_INSENSITIVE, ResultSet.CONCUR_UPDATABLE);
+             // Insensitive -> Não muda de forma dinâmica, so vera o resultado se rodar o codigo dnv(mais eficiente)
+             // Sensitive -> Muda de forma dinâmica, ou seja, se o banco de dados atualizar, o Sensitive atualizará no resultSet (menos eficiente por isso)
+             ResultSet rs = stmt.executeQuery(sql)) {
+            while (rs.next()) {
+                rs.updateString("name", rs.getString("name").toUpperCase());
+                rs.updateRow();
+                Producer producer = Producer.ProducerBuilder.builder()
+                        .id(rs.getInt("idproducer"))
+                        .nome(rs.getString("name"))
+                        .build();
+                produtores.add(producer);
+            }
+            return produtores;
+        } catch (SQLException e) {
+            log.error("Error while trying to find all producer", e);
+        }
+        return produtores;
     }
 }
 

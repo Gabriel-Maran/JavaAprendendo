@@ -46,4 +46,8 @@ public class ProducerService {
     public static void showTypeScrollWorking(){
         ProducerRepository.showTypeScrollWorking();
     }
+
+    public static void findByNameAndUpdateToUpperCase(String nome){
+        ProducerRepository.findByNameAndUpdateToUppperCase(nome);
+    }
 }

@@ -16,7 +16,9 @@ public class ConnectionFactoryTeste01 {
     private static final Logger log = LogManager.getLogger(ConnectionFactoryTeste01.class);
 
     public static void main(String[] args) {
-        ProducerService.showTypeScrollWorking();
+        List<Producer> producers = ProducerRepository.findByNameAndUpdateToUppperCase("A");
+        log.info(producers.toString());
+//        ProducerService.showTypeScrollWorking();
 //        List<Producer> producer = ProducerService.findByName("SeiL");
 //        List<Producer> producer2 = ProducerService.findAll();
 //        log.info(producer.toString());
