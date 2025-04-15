@@ -43,11 +43,23 @@ public class ProducerService {
         ProducerRepository.showDriverMetaData();
     }
 
-    public static void showTypeScrollWorking(){
+    public static void showTypeScrollWorking() {
         ProducerRepository.showTypeScrollWorking();
     }
 
-    public static void findByNameAndUpdateToUpperCase(String nome){
+    public static void findByNameAndUpdateToUpperCase(String nome) {
         ProducerRepository.findByNameAndUpdateToUppperCase(nome);
+    }
+
+    public static List<Producer> findByNameAndInsertWhenNotFound(String nome) {
+        return ProducerRepository.findByNameAndInsertWhenNotFound(nome);
+    }
+
+    public static void findByNameAndRemove(String nome) {
+        ProducerRepository.findByNameAndRemove(nome);
+    }
+
+    public static List<Producer> findByNamePreparedStetament(String nome) {
+        return ProducerRepository.findByNamePreparedStatement(nome);
     }
 }

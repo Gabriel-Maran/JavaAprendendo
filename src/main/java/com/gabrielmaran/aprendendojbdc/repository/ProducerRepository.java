@@ -5,6 +5,7 @@ import com.gabrielmaran.aprendendojbdc.dominio.Producer;
 import org.apache.logging.log4j.LogManager;
 import org.apache.logging.log4j.Logger;
 
+import javax.sql.StatementEvent;
 import java.sql.*;
 import java.util.ArrayList;
 import java.util.List;
@@ -76,6 +77,33 @@ public class ProducerRepository {
             log.error("Error while trying to find all producer", e);
         }
         return producers;
+    }
+
+    public static List<Producer> findByNamePreparedStatement(String name) {
+        log.info("Finding by name prepared statement");
+        String sql = "SELECT * FROM anime_store.producer WHERE name like ?;";
+        List<Producer> producers = new ArrayList<>();
+        try (Connection conn = ConnectionFactory.getConnection();
+             PreparedStatement ps = createdPreparedStatement(conn, sql, name);
+             ResultSet rs = ps.executeQuery();
+        ) {
+            while (rs.next()) {
+                Producer producer = Producer.ProducerBuilder.builder()
+                        .id(rs.getInt("idproducer"))
+                        .nome(rs.getString("name"))
+                        .build();
+                producers.add(producer);
+            }
+        } catch (SQLException e) {
+            log.info("Error while trying to find all producer", e);
+        }
+        return producers;
+    }
+
+    private static PreparedStatement createdPreparedStatement(Connection conn, String sql, String name) throws SQLException {
+        PreparedStatement ps = conn.prepareStatement(sql);
+        ps.setString(1, "%" + name + "%");
+        return ps;
     }
 
     public static void showProducerMetaData() {
@@ -177,6 +205,7 @@ public class ProducerRepository {
              ResultSet rs = stmt.executeQuery(sql)) {
             while (rs.next()) {
                 rs.updateString("name", rs.getString("name").toUpperCase());
+//                rs.cancelRowUpdates(); // Cancela o update (so pode ser utilizada antes do updateRow)
                 rs.updateRow();
                 Producer producer = Producer.ProducerBuilder.builder()
                         .id(rs.getInt("idproducer"))
@@ -190,5 +219,51 @@ public class ProducerRepository {
         }
         return produtores;
     }
-}
 
+    public static List<Producer> findByNameAndInsertWhenNotFound(String name) {
+        String sql = "SELECT * FROM anime_store.producer WHERE name = '%s';".formatted(name);
+        List<Producer> producers = new ArrayList<>();
+        try (Connection conn = ConnectionFactory.getConnection();
+             Statement stmt = conn.createStatement(ResultSet.TYPE_SCROLL_SENSITIVE, ResultSet.CONCUR_UPDATABLE);
+             ResultSet rs = stmt.executeQuery(sql)) {
+            if (rs.next()) return producers;
+
+            insertNewProducer(name, rs);
+            producers.add(getProducer(rs));
+        } catch (SQLException e) {
+            log.error("Error while trying to find producer", e);
+        }
+        return producers;
+    }
+
+    private static void insertNewProducer(String name, ResultSet rs) throws SQLException {
+        rs.moveToInsertRow(); // Move para uma linha sem nada
+        rs.updateString("name", name);//Atualiza a linha em que está
+        rs.insertRow();// Insere na tabela esta linha
+    }
+
+    private static Producer getProducer(ResultSet rs) throws SQLException {
+        rs.beforeFirst();
+        rs.next();// Pega o proximo
+        Producer producer = Producer.ProducerBuilder.builder()
+                .id(rs.getInt("idproducer"))
+                .nome(rs.getString("name")).build();
+        return producer;
+    }
+
+    public static void findByNameAndRemove(String name) {
+        log.info("Finding producer by name");
+        String sql = "SELECT * FROM anime_store.producer WHERE name = '%s';"
+                .formatted(name);
+        try (Connection conn = ConnectionFactory.getConnection();
+             Statement stmt = conn.createStatement(ResultSet.TYPE_SCROLL_INSENSITIVE, ResultSet.CONCUR_UPDATABLE);
+             ResultSet rs = stmt.executeQuery(sql)) {
+            while (rs.next()) {
+                log.info("Deleting producer '{}'", rs.getString("name"));
+                rs.deleteRow();
+            }
+        } catch (SQLException e) {
+            log.info("Error while trying to find producer", e);
+        }
+    }
+}
