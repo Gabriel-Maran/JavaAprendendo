@@ -5,11 +5,9 @@ import com.gabrielmaran.aprendendojbdc.dominio.Producer;
 import org.apache.logging.log4j.LogManager;
 import org.apache.logging.log4j.Logger;
 
-import javax.sql.StatementEvent;
 import java.sql.*;
 import java.util.ArrayList;
 import java.util.List;
-import java.util.stream.Collectors;
 
 public class ProducerRepository {
     private static final Logger log = LogManager.getLogger(ProducerRepository.class);
@@ -79,12 +77,29 @@ public class ProducerRepository {
         return producers;
     }
 
+    public static void updatePreparedStatement(Producer producer) {
+        try (Connection conn = ConnectionFactory.getConnection();
+             PreparedStatement ps = updatePreparedStatement(conn, producer)) {
+            int rowsAffected = ps.executeUpdate();
+            log.info("Updated producer '{}' with prepared statement, rows affected {}", producer.getNome(), rowsAffected);
+        } catch (SQLException e) {
+            log.error("Error while trying to update the producer {}", producer.getNome(), e);
+        }
+    }
+
+    private static PreparedStatement updatePreparedStatement(Connection conn, Producer producer) throws SQLException {
+        String sqlUp = "UPDATE `anime_store`.`producer` SET `name` = ? WHERE (`idproducer` = ?);";
+        PreparedStatement ps = conn.prepareStatement(sqlUp);
+        ps.setString(1, producer.getNome());
+        ps.setInt(2, producer.getId());
+        return ps;
+    }
+
     public static List<Producer> findByNamePreparedStatement(String name) {
         log.info("Finding by name prepared statement");
-        String sql = "SELECT * FROM anime_store.producer WHERE name like ?;";
         List<Producer> producers = new ArrayList<>();
         try (Connection conn = ConnectionFactory.getConnection();
-             PreparedStatement ps = createdPreparedStatement(conn, sql, name);
+             PreparedStatement ps = preparedStamentFindByName(conn, name);
              ResultSet rs = ps.executeQuery();
         ) {
             while (rs.next()) {
@@ -100,10 +115,45 @@ public class ProducerRepository {
         return producers;
     }
 
-    private static PreparedStatement createdPreparedStatement(Connection conn, String sql, String name) throws SQLException {
+    private static PreparedStatement preparedStamentFindByName(Connection conn, String name) throws SQLException {
+        String sql = "SELECT * FROM anime_store.producer WHERE name like ?;";
         PreparedStatement ps = conn.prepareStatement(sql);
         ps.setString(1, "%" + name + "%");
         return ps;
+    }
+
+    public static List<Producer> findByNameCallableStatement(String name) {
+        log.info("Finding by name prepared statement");
+        List<Producer> producers = new ArrayList<>();
+        try (Connection conn = ConnectionFactory.getConnection();
+             CallableStatement cs = callableStatementFindByName(conn, name);
+             ResultSet rs = cs.executeQuery();) {
+            while (rs.next()) {
+                Producer producer = Producer.ProducerBuilder.builder()
+                        .id(rs.getInt("idproducer"))
+                        .nome(rs.getString("name"))
+                        .build();
+                producers.add(producer);
+            }
+        } catch (SQLException e) {
+            log.error("Error while trying to find all producer in CallableStatement", e);
+        }
+        return producers;
+    }
+
+    private static CallableStatement callableStatementFindByName(Connection conn, String name) throws SQLException {
+        String sql = "CALL `anime_store`.`sp_get_producer_by_name`(?);";
+        CallableStatement ps = conn.prepareCall(sql);
+        ps.setString(1, "%" + name + "%");
+        return ps;
+    }
+
+    private static PreparedStatement preparedStatementFindByName(Connection conn, String name) throws SQLException {
+        String sql = "CALL `anime_store`.`sp_get_producer_by_name`('Gabriel');";
+        PreparedStatement ps = conn.prepareStatement(sql);
+        ps.setString(1, name);
+        return ps;
+
     }
 
     public static void showProducerMetaData() {

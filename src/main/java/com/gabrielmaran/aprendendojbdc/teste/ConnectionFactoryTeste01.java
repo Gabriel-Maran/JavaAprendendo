@@ -1,23 +1,18 @@
 package com.gabrielmaran.aprendendojbdc.teste;
 
-import com.gabrielmaran.aprendendojbdc.conn.ConnectionFactory;
 import com.gabrielmaran.aprendendojbdc.dominio.Producer;
-import com.gabrielmaran.aprendendojbdc.repository.ProducerRepository;
 import com.gabrielmaran.aprendendojbdc.service.ProducerService;
 import org.apache.logging.log4j.LogManager;
 import org.apache.logging.log4j.Logger;
 
-import java.sql.Connection;
-import java.sql.Statement;
-import java.util.ArrayList;
 import java.util.List;
 
 public class ConnectionFactoryTeste01 {
     private static final Logger log = LogManager.getLogger(ConnectionFactoryTeste01.class);
 
     public static void main(String[] args) {
-        List<Producer> producers = ProducerService.findByNamePreparedStetament("a");
-        log.info(producers.toString());
+        List<Producer> producerList = ProducerService.findByNameCallableStatement("A");
+        log.info(producerList);
 //
 
 // Níveis de log (em ordem crescente de severidade):

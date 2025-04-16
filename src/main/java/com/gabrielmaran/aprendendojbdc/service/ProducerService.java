@@ -21,12 +21,21 @@ public class ProducerService {
         ProducerRepository.update(producer);
     }
 
+    public static void updatePreparedStatement(Producer producer){
+        requireValidId(producer.getId());
+        ProducerRepository.updatePreparedStatement(producer);
+    }
+
     public static List<Producer> findAll() {
         return ProducerRepository.findALl();
     }
 
     public static List<Producer> findByName(String name) {
         return ProducerRepository.findByName(name);
+    }
+
+    public static List<Producer> findByNameCallableStatement(String name) {
+        return ProducerRepository.findByNameCallableStatement(name);
     }
 
     private static void requireValidId(Integer id) {
