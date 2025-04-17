@@ -143,6 +143,8 @@ public class ProducerRepository {
 
     private static CallableStatement callableStatementFindByName(Connection conn, String name) throws SQLException {
         String sql = "CALL `anime_store`.`sp_get_producer_by_name`(?);";
+        //O call realiza uma função predefinida no banco de dados (ex: verificar se uma compra daria certo)
+        //Já o select ele pega os dados e, normalmente, não os modifica (ex: pegar quantidade estoque)
         CallableStatement ps = conn.prepareCall(sql);
         ps.setString(1, "%" + name + "%");
         return ps;
