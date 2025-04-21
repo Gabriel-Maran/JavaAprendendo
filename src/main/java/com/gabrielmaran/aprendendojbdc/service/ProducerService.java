@@ -7,6 +7,10 @@ import java.util.List;
 
 public class ProducerService {
 
+    public static void saveTransactionPrepStat(List<Producer> producers) {
+        ProducerRepository.saveTransactionPrepStat(producers);
+    }
+
     public static void save(Producer producer) {
         ProducerRepository.save(producer);
     }

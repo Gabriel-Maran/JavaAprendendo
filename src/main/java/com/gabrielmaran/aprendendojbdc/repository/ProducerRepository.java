@@ -12,6 +12,39 @@ import java.util.List;
 public class ProducerRepository {
     private static final Logger log = LogManager.getLogger(ProducerRepository.class);
 
+    public static void saveTransactionPrepStat(List<Producer> producers) {
+        try (Connection conn = ConnectionFactory.getConnection()) {
+            conn.setAutoCommit(false);
+            // Retira o auto commit, pois, caso um de erro, não salvará outros antes
+            // Ex: Add 2 producers ao DB, mas o terceiro deu erro,
+            //     logo, os dois primeiros não deveriam ter sido adc (regra de funcionamento)
+            preparedStatementSaveTransaction(conn, producers);
+            conn.commit();
+            conn.setAutoCommit(true);
+        } catch (SQLException e) {
+            log.error("Error while trying to saving producers {}", producers, e);
+        }
+    }
+
+    private static void preparedStatementSaveTransaction(Connection conn, List<Producer> producers) throws SQLException {
+        String sql = "Insert into `anime_store`.`producer` (`name`) VALUES ( ? )";
+        boolean shouldRollback = false; //Variavel responsavel pelo controle, para ver se nenhum erro acontecerá
+        for (Producer p : producers) {
+            try (PreparedStatement ps = conn.prepareStatement(sql)) {
+                log.info("Saving producer '{}' ", p.getNome());
+                ps.setString(1, p.getNome());
+                ps.execute();
+            } catch (SQLException e) {
+                log.error("Error while saving transaction", e);
+                shouldRollback = true;
+            }
+        }
+        if (shouldRollback) {
+            log.warn("Transaction is going be rollback");
+            conn.rollback();
+        }
+    }
+
     public static void save(Producer producer) {
         String sql = "INSERT INTO `anime_store`.`producer` (`idproducer`, `name`) VALUES ('%d', '%s');".formatted(producer.getId(), producer.getNome());
         try (Connection conn = ConnectionFactory.getConnection();//try with resources se encarregad de fechar o conn e o stmt para vc
@@ -100,8 +133,7 @@ public class ProducerRepository {
         List<Producer> producers = new ArrayList<>();
         try (Connection conn = ConnectionFactory.getConnection();
              PreparedStatement ps = preparedStamentFindByName(conn, name);
-             ResultSet rs = ps.executeQuery();
-        ) {
+             ResultSet rs = ps.executeQuery()) {
             while (rs.next()) {
                 Producer producer = Producer.ProducerBuilder.builder()
                         .id(rs.getInt("idproducer"))
