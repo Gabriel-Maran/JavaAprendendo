@@ -34,6 +34,11 @@ public class Producer {
 
     }
 
+    @Override
+    public String toString() {
+        return "Producer{" + "id=" + id + ", name='" + name + '}';
+    }
+
     public Integer getId() {
         return id;
     }

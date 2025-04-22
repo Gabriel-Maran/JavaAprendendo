@@ -6,6 +6,7 @@ import org.apache.logging.log4j.LogManager;
 import org.apache.logging.log4j.Logger;
 
 import java.util.List;
+import java.util.Optional;
 import java.util.Scanner;
 
 public class ProducerService {
@@ -15,14 +16,11 @@ public class ProducerService {
 
     public static void menu(int op) {
         switch (op) {
-            case 1:
-                findByName();
-                break;
-            case 2:
-                deleteById();
-                break;
-            default:
-                throw new IllegalArgumentException("Not a valid option");
+            case 1 -> findByName();
+            case 2 -> deleteById();
+            case 3 -> save();
+            case 4 -> update();
+            default -> throw new IllegalArgumentException("Not a valid option");
         }
     }
 
@@ -30,22 +28,45 @@ public class ProducerService {
         System.out.println("Type the name or empty to all");
         String name = SCANNER.nextLine();
         List<Producer> producers = ProducerRepository.findByNamePrepStatm(name);
-        for (int i = 0; i < producers.size(); i++) {
-            Producer producer = producers.get(i);
-            System.out.printf("[%d] - ID: %d, name: %s;%n", i, producer.getId(), producer.getName());
-        }
+        producers.forEach(p -> System.out.printf("[%d] - name: %s;%n", p.getId(), p.getName()));
     }
 
     private static void deleteById() {
         System.out.println("Type the id of the producer you want to delete");
         int idToDelete = Integer.parseInt(SCANNER.nextLine());
-        System.out.println("Are you sure? (S/N)");
+        System.out.println("Are you sure? (Y/N)");
         String choice = SCANNER.nextLine();
-        if (choice.toUpperCase().contains("S")) {
+        if (choice.toUpperCase().contains("Y")) {
             ProducerRepository.deleteById(idToDelete);
         } else {
             System.out.println("The deleting operation was cancelled");
         }
 
     }
+
+    private static void save() {
+        System.out.println("Type the producer name you want to save");
+        String name = SCANNER.nextLine();
+        Producer producer = Producer.ProducerBuilder.builder().nome(name).build();
+        ProducerRepository.save(producer);
+    }
+
+    private static void update() {
+        System.out.println("Type the id of the producer you want to update");
+        int idToUpdate = Integer.parseInt(SCANNER.nextLine());
+        Optional<Producer> producerOptional = ProducerRepository.findById(idToUpdate);
+        if(producerOptional.isEmpty()){
+            System.out.println("Producer not found");
+            return;
+        }
+        System.out.println("Type the new name of the producer");
+        String newName = SCANNER.nextLine();
+        newName = newName.isEmpty() ? producerOptional.get().getName() : newName;
+        Producer updatedProducer = Producer.ProducerBuilder
+                .builder().id(idToUpdate).nome(newName).build();
+        ProducerRepository.update(idToUpdate, updatedProducer);
+        System.out.println("The new name of the producer was successfully updated");
+    }
+
+
 }

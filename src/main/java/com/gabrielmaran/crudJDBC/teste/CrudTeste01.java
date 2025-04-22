@@ -21,6 +21,8 @@ public class CrudTeste01 {
         System.out.println("Type the number of your operation:");
         System.out.println("  1. Serach for producer ");
         System.out.println("  2. Delete producer by ID ");
+        System.out.println("  3. Save a new producer  ");
+        System.out.println("  4. Update a producer by ID ");
         System.out.println("  0. Exit");
     }
 }

@@ -11,6 +11,7 @@ import java.sql.ResultSet;
 import java.sql.SQLException;
 import java.util.ArrayList;
 import java.util.List;
+import java.util.Optional;
 
 public class ProducerRepository {
     private static final Logger log = LogManager.getLogger(ProducerRepository.class);
@@ -65,6 +66,67 @@ public class ProducerRepository {
         String sql = "DELETE FROM anime_store.producer WHERE idproducer = ?;";
         PreparedStatement ps = conn.prepareStatement(sql);
         ps.setInt(1, id);
+        return ps;
+    }
+
+    public static void save(Producer producer) {
+        log.info("Saving producer: {}", producer);
+        try (Connection conn = ConnectionFactory.getConnection();
+             PreparedStatement ps = createSavePrepStatm(conn, producer)) {
+            ps.executeUpdate();
+        } catch (SQLException e) {
+            log.error("Error while trying to save producer {}", producer);
+            throw new RuntimeException(e);
+        }
+
+    }
+
+    private static PreparedStatement createSavePrepStatm(Connection conn, Producer producer) throws SQLException {
+        String sql = "INSERT INTO anime_store.producer (name) VALUES(?);";
+        PreparedStatement ps = conn.prepareStatement(sql);
+        ps.setString(1, producer.getName());
+        return ps;
+    }
+
+    public static Optional<Producer> findById(int id) {
+        log.info("Finding by id: {}", id);
+        try (Connection conn = ConnectionFactory.getConnection();
+             PreparedStatement ps = createFindByIdPrepStatm(conn, id);
+             ResultSet rs = ps.executeQuery()) {
+            if (!rs.next()) return Optional.empty();
+            return Optional.of(Producer.ProducerBuilder.builder()
+                    .id(rs.getInt("idproducer"))
+                    .nome(rs.getString("name"))
+                    .build());
+        } catch (SQLException e) {
+            log.error("Error while trying to find by id {}", id);
+            throw new RuntimeException(e);
+        }
+    }
+
+    private static PreparedStatement createFindByIdPrepStatm(Connection conn, int id) throws SQLException {
+        String sql = "SELECT * FROM anime_store.producer WHERE idproducer = ?;";
+        PreparedStatement ps = conn.prepareStatement(sql);
+        ps.setInt(1, id);
+        return ps;
+    }
+
+    public static void update(int id, Producer producer) {
+        log.info("Updating producer: {}", producer);
+        try (Connection conn = ConnectionFactory.getConnection();
+             PreparedStatement ps = createUpdatePrepStatm(conn, id, producer)) {
+            ps.execute();
+        } catch (SQLException e) {
+            log.error("Error while trying to update producer {}", producer);
+            throw new RuntimeException(e);
+        }
+    }
+
+    private static PreparedStatement createUpdatePrepStatm(Connection conn, int id, Producer producer) throws SQLException {
+        String sql = "UPDATE anime_store.producer SET name = ? WHERE idproducer = ?;";
+        PreparedStatement ps = conn.prepareStatement(sql);
+        ps.setString(1, producer.getName());
+        ps.setInt(2, id);
         return ps;
     }
 }
