@@ -16,10 +16,10 @@ public class ProducerRepository {
     private static final Logger log = LogManager.getLogger(ProducerRepository.class);
 
     public static List<Producer> findByNamePrepStatm(String name) {
-        log.info("Find by nanme prep statm: " + name);
+        log.info("Finding by name: " + name);
         List<Producer> producers = new ArrayList<>();
         try (Connection conn = ConnectionFactory.getConnection();
-             PreparedStatement ps = createPreparedStatement(conn, name);
+             PreparedStatement ps = createFindNamePrepStatm(conn, name);
              ResultSet rs = ps.executeQuery()) {
             while (rs.next()) {
                 Producer producer = Producer.ProducerBuilder.builder()
@@ -35,11 +35,36 @@ public class ProducerRepository {
         return producers;
     }
 
-    private static PreparedStatement createPreparedStatement(Connection conn, String name) throws SQLException {
+    private static PreparedStatement createFindNamePrepStatm(Connection conn, String name) throws SQLException {
         String sql = "SELECT * FROM anime_store.producer WHERE name like ?;";
         PreparedStatement ps = conn.prepareStatement(sql);
         ps.setString(1, "%" + name + "%");
         return ps;
 
+    }
+
+    public static void deleteById(int id) {
+        log.info("Deleting by id: {}", id);
+        try (Connection conn = ConnectionFactory.getConnection();
+             PreparedStatement ps = createDeleteIdPrepStatm(conn, id)) {
+            int rowsAffected = ps.executeUpdate();
+            if (rowsAffected > 0) {
+                log.info("Successfully deleted by id: {}", id);
+            } else {
+                log.info("No producer find with id: {}", id);
+            }
+            log.info("Deleted by id: {}", id);
+
+        } catch (SQLException e) {
+            log.error("Error while trying to delete by id {}", id);
+            throw new RuntimeException(e);
+        }
+    }
+
+    private static PreparedStatement createDeleteIdPrepStatm(Connection conn, int id) throws SQLException {
+        String sql = "DELETE FROM anime_store.producer WHERE idproducer = ?;";
+        PreparedStatement ps = conn.prepareStatement(sql);
+        ps.setInt(1, id);
+        return ps;
     }
 }
