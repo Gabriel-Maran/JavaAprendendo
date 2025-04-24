@@ -1,5 +1,7 @@
 package com.gabrielmaran.aprendendoClassesInternas;
 
+import java.util.HashMap;
+
 class Animal{
     public void walk(){
         System.out.println("Animal wamlikng");
@@ -11,7 +13,6 @@ class Animal{
 //        System.out.println("Cachorro wamlikng");
 //    }
 //}
-
 public class ClassesAnonimasTeste01 {
     public static void main(String[] args) {
         Animal a =  new Animal(){ //Ela é criada assim e será utilizada apenas uma vez(se for utilizada mais que uma, o certo é criar uma classes separada
