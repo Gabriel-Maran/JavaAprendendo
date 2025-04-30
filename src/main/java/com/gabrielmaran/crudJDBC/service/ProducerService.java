@@ -14,8 +14,8 @@ public class ProducerService {
 
     private static final Scanner SCANNER = new Scanner(System.in);
 
-    public static void menu(int op) {
-        switch (op) {
+    public static void menu(int escolha) {
+        switch (escolha) {
             case 1 -> findByName();
             case 2 -> deleteById();
             case 3 -> save();
@@ -67,6 +67,4 @@ public class ProducerService {
         ProducerRepository.update(idToUpdate, updatedProducer);
         System.out.println("The new name of the producer was successfully updated");
     }
-
-
 }

@@ -1,15 +1,15 @@
 package com.gabrielmaran.crudJDBC.dominio;
 
 public class Anime {
-    private Integer idAnime;
+    private int idAnime;
     private String name;
-    private Integer episodes;
+    private int episodes;
     private Producer producer;
 
     public static final class AnimeBuilder {
-        private Integer idAnime;
+        private int idAnime;
         private String name;
-        private Integer episodes;
+        private int episodes;
         private Producer producer;
 
         private AnimeBuilder() {
@@ -19,7 +19,7 @@ public class Anime {
             return new AnimeBuilder();
         }
 
-        public AnimeBuilder setIdAnime(Integer idAnime) {
+        public AnimeBuilder setIdAnime(int idAnime) {
             this.idAnime = idAnime;
             return this;
         }
@@ -29,7 +29,7 @@ public class Anime {
             return this;
         }
 
-        public AnimeBuilder setEpisodes(Integer episodes) {
+        public AnimeBuilder setEpisodes(int episodes) {
             this.episodes = episodes;
             return this;
         }
@@ -47,5 +47,26 @@ public class Anime {
             anime.producer = this.producer;
             return anime;
         }
+    }
+
+    @Override
+    public String toString() {
+        return "Anime{" + "idAnime=" + idAnime + ", name='" + name + ", episodes=" + episodes + ", producer=" + producer + '}';
+    }
+
+    public int getIdAnime() {
+        return idAnime;
+    }
+
+    public String getName() {
+        return name;
+    }
+
+    public int getEpisodes() {
+        return episodes;
+    }
+
+    public Producer getProducer() {
+        return producer;
     }
 }
