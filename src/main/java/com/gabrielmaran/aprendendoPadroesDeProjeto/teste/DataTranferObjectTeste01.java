@@ -7,9 +7,9 @@ public class DataTranferObjectTeste01 {
         Aircraft aircraft = new Aircraft("nome");
         Country country = Country.BRAZIL;
         Currency currency = MoedaCurrencyFactory.newCurrency(country);
-        Person person = new Person.PersonBuilder()
+        Person person = Person.PersonBuilder.builder()
                 .firstName("SeiLa")
-                .lastMame("EuSei")
+                .lastName("EuSei")
                 .username("Sim")
                 .email("sim@sim.com")
                 .build();
